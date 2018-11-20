@@ -10,15 +10,6 @@ public class Main {
     public static final int FRAME_WIDTH = 1200;
 
     public static void main(String[] args) {
-        /*JFrame pongFrame = new JFrame("Pong");
-        Panel panel = new Panel();
-        pongFrame.setSize(1200,900);
-        pongFrame.setLocation(dim.width/2 - dim.getSize().width/2, dim.height/2 - dim.getSize().height/2);
-        pongFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pongFrame.add(panel);
-
-        pongFrame.setVisible(true);*/
-
         JFrame frame = new JFrame("Pong");
 
         frame.setSize(FRAME_WIDTH,FRAME_HEIGHT);
