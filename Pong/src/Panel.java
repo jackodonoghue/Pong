@@ -7,21 +7,8 @@ public class Panel extends JPanel implements ActionListener, KeyListener{
     JButton startButton = new JButton();
     Font font = new Font("Arial", Font.PLAIN, 60);
     Timer t = new Timer(5, this);
-    private double xVelBall = 2, yVelBall = 2, yVelPaddleL = 0, xLP = 20, yLP = 900/2 - 100;
+    private int xVelBall = 2, yVelBall = 2, yVelPaddleL = 0, xLP = 20, yLP = 900/2 - 100, yRP = 900/2 - 100;
     private int xBall = 600, yBall = 450;
-
-    //Start button actionListener
-    ActionListener buttonListener = new ActionListener() {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-            startButton.setVisible(false);
-
-        }
-
-    };
-
 
     public Panel () {
 
@@ -31,7 +18,70 @@ public class Panel extends JPanel implements ActionListener, KeyListener{
         add(startButton);
         setStartButton(startButton);
         t.start();
-        addKeyListener(this);
+        addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+                int key = e.getKeyCode();
+
+                if( key == KeyEvent.VK_DOWN) {
+
+                    yLP += 20;
+
+                }
+
+                if( key == KeyEvent.VK_UP) {
+
+                    yLP -= 20;
+
+                }
+
+                repaint();
+
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                //NOT USED - Needed for implementing KeyListener
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                //NOT USED - Needed for implementing KeyListener
+            }
+        });
+        addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+                int key = e.getKeyCode();
+
+                if( key == KeyEvent.VK_W)) {
+
+                    yRP += 20;
+
+                }
+
+                if( key == KeyEvent.VK_S) {
+
+                    yRP -= 20;
+
+                }
+
+                repaint();
+
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                //NOT USED - Needed for implementing KeyListener
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                //NOT USED - Needed for implementing KeyListener
+            }
+        });
         setFocusable(true);
 
     }
@@ -46,7 +96,16 @@ public class Panel extends JPanel implements ActionListener, KeyListener{
         b.setBorderPainted(false);
         b.setContentAreaFilled(false);
         b.setLocation(Main.FRAME_WIDTH/2 - b.getWidth()/2, Main.FRAME_HEIGHT/2 - b.getHeight()/2);
-        b.addActionListener(buttonListener);
+        b.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                startButton.setVisible(false);
+
+            }
+
+        });
 
     }
 
@@ -68,11 +127,11 @@ public class Panel extends JPanel implements ActionListener, KeyListener{
 
             //paddle left
             g.setColor(Color.WHITE);
-            g.fillRect((int)xLP, (int)yLP, 40, 200);
+            g.fillRect(xLP, yLP, 40, 200);
 
             //paddle right
             g.setColor(Color.WHITE);
-            g.fillRect(1140, 900/2 - 100, 40, 200);
+            g.fillRect(1140, yRP, 40, 200);
 
         }
 
@@ -102,17 +161,31 @@ public class Panel extends JPanel implements ActionListener, KeyListener{
 
     }
 
+    public void down(int y) {
+
+        y += 20;
+
+
+    }
+
     @Override
     public void keyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();
 
-        if( key == KeyEvent.VK_KP_DOWN) {
+        if( key == KeyEvent.VK_DOWN) {
 
-            //Movement.down(int );
-            System.out.print("heli");
+            yLP += 20;
 
         }
+
+        if( key == KeyEvent.VK_UP) {
+
+            yLP -= 20;
+
+        }
+
+        repaint();
 
     }
 

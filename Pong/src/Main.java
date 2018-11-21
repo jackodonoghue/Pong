@@ -15,9 +15,9 @@ public class Main {
         frame.setSize(FRAME_WIDTH,FRAME_HEIGHT);
         frame.setLocation(dim.width/2 - frame.getSize().width/2, dim.height/2 - frame.getSize().height/2);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(new Panel());
         frame.setVisible(true);
         frame.setResizable(false);
+        frame.add(new Panel());
     }
 
 }
