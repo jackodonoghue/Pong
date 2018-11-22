@@ -2,13 +2,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Panel extends JPanel implements ActionListener, KeyListener{
+public class Panel extends JPanel implements ActionListener{
 
     JButton startButton = new JButton();
     Font font = new Font("Arial", Font.PLAIN, 60);
     Timer t = new Timer(5, this);
-    private int xVelBall = 2, yVelBall = 2, yVelPaddleL = 0, xLP = 20, yLP = 900/2 - 100, yRP = 900/2 - 100;
+    private int xVelBall = 2, yVelBall = 2, yVelPaddleL = 10, xLP = 20, yLP = 900/2 - 100, yRP = 900/2 - 100;
     private int xBall = 600, yBall = 450;
+    private int scoreP1 = 0, scoreP2 = 0;
+    JLabel score = new JLabel(scoreP1 + "     " + scoreP2);
 
     public Panel () {
 
@@ -18,22 +20,41 @@ public class Panel extends JPanel implements ActionListener, KeyListener{
         add(startButton);
         setStartButton(startButton);
         t.start();
+        add(score);
+        setScore(score);
         addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
 
                 int key = e.getKeyCode();
 
+
                 if( key == KeyEvent.VK_DOWN) {
 
-                    yLP += 20;
+                    yLP += yVelPaddleL;
+
+                    if(yLP == Main.FRAME_HEIGHT - 240) {
+                        yVelPaddleL = 0;
+                    }
+
+                    else {
+                        yVelPaddleL = 10;
+                    }
 
                 }
 
                 if( key == KeyEvent.VK_UP) {
 
-                    yLP -= 20;
+                    //up(yLP, yVelPaddleL);
+                    yLP -= yVelPaddleL;
 
+                    if(yLP == 0) {
+                        yVelPaddleL = 0;
+                    }
+
+                    else {
+                        yVelPaddleL = 10;
+                    }
                 }
 
                 repaint();
@@ -56,15 +77,15 @@ public class Panel extends JPanel implements ActionListener, KeyListener{
 
                 int key = e.getKeyCode();
 
-                if( key == KeyEvent.VK_W)) {
+                if( key == KeyEvent.VK_W) {
 
-                    yRP += 20;
+                    yRP -= 20;
 
                 }
 
                 if( key == KeyEvent.VK_S) {
 
-                    yRP -= 20;
+                    yRP += 20;
 
                 }
 
@@ -109,6 +130,16 @@ public class Panel extends JPanel implements ActionListener, KeyListener{
 
     }
 
+    public void setScore(JLabel s) {
+
+        s.setVisible(true);
+        s.setFont(font);
+        s.setBackground(Color.WHITE);
+        s.setForeground(Color.WHITE);
+        s.setLocation(200,200);
+
+    }
+
     @Override
     public void paintComponent (Graphics g){ //https://www.youtube.com/watch?v=2l5-5PMUc5Y
 
@@ -123,7 +154,7 @@ public class Panel extends JPanel implements ActionListener, KeyListener{
 
             //ball
             g.setColor(Color.WHITE);
-            g.fillRect((int)xBall, (int)yBall, 20, 20);
+            g.fillRect(xBall, yBall, 20, 20);
 
             //paddle left
             g.setColor(Color.WHITE);
@@ -161,42 +192,31 @@ public class Panel extends JPanel implements ActionListener, KeyListener{
 
     }
 
-    public void down(int y) {
+    /*//Paddle Movement
+    public void up(int y, int yVel, int pos) {
 
-        y += 20;
+        y -= yVel;
 
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-        int key = e.getKeyCode();
-
-        if( key == KeyEvent.VK_DOWN) {
-
-            yLP += 20;
-
+        if(y == pos) {
+            yVel = 0;
         }
 
-        if( key == KeyEvent.VK_UP) {
+        else {
+            yVel = 10;
+        }
+    }
 
-            yLP -= 20;
+    public void down(int y, int yVel, int pos) {
 
+        y += yVel;
+
+        if(y == pos) {
+            yVel = 0;
         }
 
-        repaint();
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        //NOT USED - Needed for implementing KeyListener
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        //NOT USED - Needed for implementing KeyListener
-    }
+        else {
+            yVel = 10;
+        }
+    }*/
 
 }
